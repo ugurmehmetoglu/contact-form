@@ -40,15 +40,25 @@ font-weight: 600;
 
 .contact-name{
   font-weight: 600;
-  
+
 }
 .contact-name input {
   margin-top:10px;
-  margin-right:15px;
-  width: 46%;
-  height: 25px;
+  margin-right:10px;
+  width: 52%;
+  height: 30px;
  
   box-sizing: border-box;
+}
+.contact-age{
+  font-weight: 600;
+  margin-top: 25px;
+}
+.contact-age input{
+  margin-top:10px;
+  margin-right:10px;
+  width: 50%;
+  height: 25px;
 }
 .contact-email{
   font-weight: 600;
@@ -98,6 +108,37 @@ font-weight: 600;
   font-size:12px;
   margin-top: 0px;
 }
+.contact-style-picture{
+  font-weight: 600;
+  margin-top: 25px;
+}
+.contact-style-picture input{
+  margin-top:10px;
+  margin-right:10px;
+  width: 50%;
+  height: 45px;
+}
+.contact-style-picture p{
+  font-size:12px;
+  margin-top: 0px;
+}
+.contact-style-picture input::file-selector-button {
+  font-weight: bold;
+  color: black;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+  width:100px;
+  height: 30px;
+  
+}
+.avaliabledate{
+  margin-top:10px;
+  margin-right:10px;
+  width: 50%;
+  height: 100px;
+}
+
 .contact-size{
   font-weight: 600;
   margin-top: 25px;
