@@ -1,42 +1,39 @@
-import React, { useState } from 'react'
-import './App.css';
-import image from './M93A6808.JPG'
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import image from "./M93A6808.JPG";
+import Compressor from 'compressorjs';
 
 
 function App() {
-
   const [formInputs, setFormInputs] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
+    senderEmail: 'ufuk.mehmetoglu@gmail.com',
+    firstname: "",
+    lastname: "",
+    email: "",
     age: "",
-    phone: '',
-    description: '',
-    placement: '',
-    size: '',
-    style: '',
-    checkbox1:'',
-    avaliabledate: '',
-    skin: '',
-    picture1: '',
-    picture2: '',
-    picture3: ''
-
-
-
-
-  })
+    phone: "",
+    description: "",
+    placement: "",
+    size: "",
+    style: "",
+    skin: "",
+    picture1: "",
+    picture2: "",
+    picture3: "",
+    location: "",
+    availability: "",
+    availabledate: "",
+  });
+  const [defaultState, setDefaultState] = useState(false)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false)
-
-  const [checked, setChecked] = useState(false);
-
-  const [submitting, setSubmitting] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = (e) => {
-    const { firstname,
+    const {
+      senderEmail,
+      firstname,
       lastname,
       age,
       email,
@@ -46,97 +43,98 @@ function App() {
       size,
       skin,
       style,
-      checkbox1,
-      avaliabledate,
       picture1,
       picture2,
-      picture3 } = formInputs
+      picture3,
+      location,
+      availability,
+      availabledate,
+    } = formInputs;
     e.preventDefault();
-    
+
     setLoading(true);
-    console.log(formInputs)
-    fetch(
-      "https://03unvo4g21.execute-api.us-east-1.amazonaws.com/sendEmail",
-      {
-        mode: "no-cors",
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname,
-          lastname,
-          age,
-          email,
-          phone,
-          description,
-          placement,
-          size,
-          skin,
-          style,
-          checkbox1,
-          avaliabledate,
-          picture1,
-          picture2,
-          picture3,
-          date: new Date(),
-
-        }),
-      }
-    )
+    fetch("https://oy738lt412.execute-api.us-east-1.amazonaws.com/sendEmail", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        senderEmail,
+        firstname,
+        lastname,
+        age,
+        email,
+        phone,
+        description,
+        placement,
+        size,
+        skin,
+        style,
+        picture1,
+        picture2,
+        picture3,
+        location,
+        availability,
+        availabledate,
+        date: new Date(),
+      }),
+    })
       .then((res) => {
-
+        console.log('res', res);
         setSuccess(true);
-        setLoading(false)
-        console.log(res)
-        
-        
-        
-
-
+        setLoading(false);
       })
       .catch((err) => {
+        console.log('err', err);
         setLoading(false);
         setError(true);
-
-
-        console.log('error', err)
-      })
+      });
   };
 
-
-
   const handlePicture = (event) => {
-
+    let quality = 0.7;
+    let maxWidth = 500;
     let files = event.target.files;
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-
-    reader.onload = (e) => {
-      setFormInputs({
-        ...formInputs, [event.target.name]: reader.result,
-      })
-
-
+    let image = files[0];
+    if (!image) {
+      return;
+    }
+    if (event.target.name === 'picture1') {
+      quality = 0.9;
+      maxWidth = 700;
     }
 
-  }
+    new Compressor(image, {
+      quality: quality, // 0.6 can also be used, but its not recommended to go below.
+      maxWidth: maxWidth,
+      success: (compressedResult) => {
+        // compressedResult has the compressed file.
+        // Use the compressed file to upload the images to your server. 
+        let reader = new FileReader();
+        reader.readAsDataURL(compressedResult);
+        reader.onload = (e) => {
+          setFormInputs({
+            ...formInputs,
+            [event.target.name]: reader.result,
+          });
+        };
+      },
+    });
+
+  };
 
   const handleChange = (e) => {
-    e.preventDefault();
     setFormInputs({
-      ...formInputs, [e.target.name]: e.target.value,
-    })
-
-  }
-
-
-  const handleCheck = () => {
-    console.log("it is checked")
-    setChecked(!checked)
-  }
-
+      ...formInputs,
+      [e.target.name]: e.target.value,
+    });
+    e.preventDefault();
+  };
+  useEffect(() => {
+    setDefaultState(!defaultState)
+  }, [formInputs.location, formInputs.availability])
 
 
   return (
@@ -148,119 +146,243 @@ function App() {
         <hr />
       </div>
       <div className="contact-form-main">
-        <form action="" onSubmit={handleSubmit}>
-          <div className="contact-name">
-            <label htmlFor="name">Name<span className="required">*</span></label>
-            <br />
+        {success ? (
+          <span className="success-message">
+            Your Request Has Been Submitted Successfully! We will respond within
+            48 hours! Thank you!!"
+</span>
+        ) : (
+            <form action="" onSubmit={handleSubmit}>
+              <div className="contact-name">
+                <label htmlFor="name">
+                  Name<span className="required">*</span>
+                </label>
+                <br />
 
-            <input required onChange={handleChange} type="text" name="firstname" placeholder="First Name" />
-            <input required onChange={handleChange} type="text" name="lastname" placeholder="Last Name" />
+                <input
+                  required
+                  onChange={handleChange}
+                  type="text"
+                  name="firstname"
+                  placeholder="First Name"
+                />
+                <input
+                  required
+                  onChange={handleChange}
+                  type="text"
+                  name="lastname"
+                  placeholder="Last Name"
+                />
+              </div>
+              <div className="contact-age">
+                <label htmlFor="Age">
+                  Age<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  name="age"
+                  placeholder="Age"
+                  required
+                />
+              </div>
+              <div className="contact-email">
+                <label htmlFor="email">
+                  Email<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  onChange={handleChange}
+                  type="email"
+                  name="email"
+                  placeholder="example@example.com"
+                  required
+                />
+              </div>
+              <div className="contact-phone">
+                <label htmlFor="phone">
+                  Phone<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handleChange}
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                />
+              </div>
+              <div className="contact-tattoo-description">
+                <label htmlFor="description">
+                  Tattoo Description<span className="required">*</span>
+                </label>
+                <br />
+                <textarea
+                  required
+                  onChange={handleChange}
+                  rows="8"
+                  cols="50"
+                  name="description"
+                  placeholder="Tattoo Description"
+                  maxLength="400"
+                ></textarea>
+              </div>
+              <div className="contact-placement">
+                <label htmlFor="name">
+                  Placement<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handleChange}
+                  type="text"
+                  name="placement"
+                  placeholder=""
+                />
+                <p>
+                  (Please be specific as possible. "Inner forearm" rather than
+                  just "forearm".)
+</p>
+              </div>
 
+              <div className="contact-size">
+                <label htmlFor="name">
+                  Approximate Size<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handleChange}
+                  type="text"
+                  name="size"
+                  placeholder=""
+                />
+                <p>(Inches)</p>
+              </div>
+              <div className="contact-skin-picture">
+                <label htmlFor="name">
+                  Picture of Placement (YOUR Skin)
+<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handlePicture}
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  id="myFile"
+                  name="skin"
+                ></input>
+              </div>
+              <div className="contact-style-picture">
+                <label htmlFor="name">
+                  Style Reference <span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handlePicture}
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  id="myFile"
+                  name="style"
+                ></input>
+                <p>
+                  (Please attach a screenshot of one of my previous works' photo
+                  as a reference.)
+</p>
+              </div>
+              <div className="contact-availability">
+                <label htmlFor="availability">
+                  Availability<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  onChange={handleChange}
+                  type="radio"
+                  name="availability"
+                  value="Available"
+                  checked={formInputs.availability === 'Available'}
+                ></input>
+                <label htmlFor="availability">I have open availability</label>
+                <br></br>
+                <input
+                  type="radio"
+                  name="availability"
+                  onChange={handleChange}
+                  value="Specific dates"
+                  checked={formInputs.availability === 'Specific dates'}
+                  required
+                ></input>
+                <label htmlFor="availability">I have specific dates available</label>
+                <br></br>
 
-          </div>
-          <div className="contact-age">
-            <label htmlFor="Age">Age<span className="required">*</span></label>
-            <br />
-            <input onChange={handleChange} type="text" name="age" placeholder="Age" />
-          </div>
-          <div className="contact-email">
-            <label htmlFor="Email">Email<span className="required">*</span></label>
-            <br />
-            <input onChange={handleChange} type="text" name="email" placeholder="example@example.com" />
-          </div>
-          <div className="contact-phone">
-            <label htmlFor="phone">Phone<span className="required">*</span></label>
-            <br />
-            <input required onChange={handleChange} type="text" name="phone" placeholder="Phone Number" />
-
-          </div>
-          <div className="contact-tattoo-description">
-            <label htmlFor="Message">Tattoo Description<span className="required">*</span></label>
-            <br />
-            <input required onChange={handleChange} type="text" name="description" placeholder="" />
-
-          </div>
-          <div className="contact-placement">
-            <label htmlFor="name">Placement<span className="required">*</span></label>
-            <br />
-            <input required onChange={handleChange} type="text" name="placement" placeholder="" />
-            <p>(Please be specific as possible. "Inner forearm" rather than just "forearm".)</p>
-
-
-          </div>
-
-          <div className="contact-size">
-            <label htmlFor="name">Approximate Size<span className="required">*</span></label>
-            <br />
-            <input required onChange={handleChange} type="text" name="size" placeholder="" />
-            <p>(Inches)</p>
-          </div>
-          <div className="contact-skin-picture">
-            <label htmlFor="name">Picture of Placement (YOUR Skin)<span className="required">*</span></label>
-            <br />
-            <input required onChange={handlePicture} accept="application/image" type="file" id="myFile" name="skin"></input>
-          </div>
-          <div className="contact-style-picture">
-            <label htmlFor="name">Style Reference <span className="required">*</span></label>
-            <br />
-            <input required onChange={handlePicture} accept="application/image" type="file" id="myFile" name="style"></input>
-            <p>(Please attach a screenshot of one of my previous works' photo as a reference.)</p>
-          </div>
-          <div className="contact-availability">
-            <label htmlFor="name">Availability<span className="required">*</span></label>
-            <br />
-            <input onChange={handleChange} type="checkbox" name="checkbox1"></input>
-            <label htmlFor="checkbox1">I have open availability</label><br></br>
-            <input type="checkbox" name="checkbox2" onChange={handleCheck} ></input>
-            <label htmlFor="checkbox2">I have specific dates available</label><br></br>
-
-            <input className="avaliabledate"  onChange={handleChange} type="text" name="avaliabledate" style={{ display: checked ? "block" : "none" }} placeholder="please write your avaliable days" />
-          </div>
-          <div className="contact-photo-reference-1">
-            <label htmlFor="name">Photo Reference<span class="required">*</span></label>
-            <br />
-            <input required onChange={handlePicture} type="file" id="myFile" name="picture1" ></input>
-
-          </div>
-          <div className="contact-photo-reference-2">
-            <label htmlFor="name">Photo Reference</label>
-            <br />
-            <input onChange={handlePicture} type="file" id="myFile" name="picture2"></input>
-
-          </div>
-          <div className="contact-photo-reference-3">
-            <label htmlFor="name">Photo Reference</label>
-            <br />
-            <input onChange={handlePicture} type="file" id="myFile" name="picture3"></input>
-
-          </div>
-          <div className="contact-travel">
-            <label htmlFor="name">Traveling or Local?<span className="required">*</span></label>
-            <br />
-            <input type="checkbox" name="locationCheckbox1"></input>
-            <label htmlFor="locationCheckbox1">I live in/around LA</label><br></br>
-            <input type="checkbox" name="locationCheckbox2"></input>
-            <label htmlFor="locationCheckbox2">I'm traveling to LA</label><br></br>
-          </div>
-
-          <div className="contact-submit">
-            <input type="submit" value="Submit" />
-            <span>{loading ? 
-              "Loading..." : ""}</span>
-            <span>
-              {success ?
-                "Your Request Has Been Submitted Successfully! We will respond within 48 hours! Thank you!!" : ""}
-
-            </span>
-
-
-          </div>
-
-        </form>
-
+                <input
+                  className="avaliabledate"
+                  onChange={handleChange}
+                  type="text"
+                  name="availabledate"
+                  style={{ display: formInputs.availability === 'Specific dates' ? "block" : "none" }}
+                  placeholder="please write your available days"
+                  required
+                />
+              </div>
+              <div className="contact-photo-reference-1">
+                <label htmlFor="name">
+                  Photo Reference<span className="required">*</span>
+                </label>
+                <br />
+                <input
+                  required
+                  onChange={handlePicture}
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  id="myFile"
+                  name="picture1"
+                ></input>
+              </div>
+              <div className="contact-photo-reference-2">
+                <label htmlFor="name">Photo Reference</label>
+                <br />
+                <input
+                  onChange={handlePicture}
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  id="myFile"
+                  name="picture2"
+                ></input>
+              </div>
+              <div className="contact-photo-reference-3">
+                <label htmlFor="name">Photo Reference</label>
+                <br />
+                <input
+                  onChange={handlePicture}
+                  accept="image/png,image/jpeg"
+                  type="file"
+                  id="myFile"
+                  name="picture3"
+                ></input>
+              </div>
+              <div className="contact-travel">
+                <label htmlFor="location">
+                  Traveling or Local?<span className="required">*</span>
+                </label>
+                <br />
+                <input type="radio" name="location" value="I live in/around LA" onChange={handleChange} checked={formInputs.location === "I live in/around LA"} required />
+                <label htmlFor="location">I live in/around LA</label>
+                <br></br>
+                <input type="radio" name="location" value="I'm traveling to LA" onChange={handleChange} checked={formInputs.location === "I'm traveling to LA"} required />
+                <label htmlFor="location">I'm traveling to LA</label>
+                <br></br>
+              </div>
+              <div className="contact-submit">
+                <input type="submit" value={loading ? "Sending..." : "Sending"} />
+              </div>
+              {error ? <span className="error-message">There has been an error. We are sorry for the inconvince. Please try again</span> : <></>}
+            </form>
+          )}
       </div>
-
-
     </div>
   );
 }

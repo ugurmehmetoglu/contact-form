@@ -3,126 +3,125 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-
-}
-.contact-form-top {
+  min-height: 100vh;
+  
+  }
+  .contact-form-top {
   color:white;
-}
-.contact-form-top img{
+  }
+  .contact-form-top img{
   width: 200px;
   height: 200px;
   margin-top:40px;
   border-radius:50%;
   object-fit: cover;
   object-position:top;
-}
-.contact-form-top h2 {
+  }
+  .contact-form-top h2 {
   margin-left:25px;
-
-}
-.required {
+  
+  }
+  .required {
   color: red;
-}
-
-.contact-form-top p{
-margin-left:60px;
-font-weight: 600;
-}
-
-.contact-form-main{
+  }
+  
+  .contact-form-top p{
+  margin-left:60px;
+  font-weight: 600;
+  }
+  
+  .contact-form-main{
   color:white;
   display: flex;
   flex-direction: column;
   max-width: 400px;
   padding: 30px;
-}
-
-.contact-name{
+  }
+  
+  .contact-name{
   font-weight: 600;
-
-}
-.contact-name input {
+  
+  }
+  .contact-name input {
   margin-top:10px;
   margin-right:10px;
   width: 52%;
   height: 30px;
- 
   box-sizing: border-box;
-}
-.contact-age{
+  }
+  .contact-age{
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-age input{
+  }
+  .contact-age input{
   margin-top:10px;
   margin-right:10px;
   width: 50%;
   height: 25px;
-}
-.contact-email{
+  }
+  .contact-email{
   font-weight: 600;
   margin-top: 25px;
-}
-
-.contact-email input{
+  }
+  
+  .contact-email input{
   margin-top:10px;
   margin-right:10px;
   width: 100%;
   height: 25px;
-}
-
-.contact-phone{
+  }
+  
+  .contact-phone{
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-phone input{
+  }
+  .contact-phone input{
   margin-top:10px;
   margin-right:10px;
   width: 100%;
   height: 25px;
-}
-.contact-tattoo-description{
+  }
+  .contact-tattoo-description{
   font-weight: 600;
   margin-top: 25px;
-}
-
-.contact-tattoo-description input{
+  }
+  
+  .contact-tattoo-description input{
   margin-top:10px;
   margin-right:10px;
   width: 100%;
   height: 100px;
-}
-
-.contact-placement{
+  }
+  
+  .contact-placement{
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-placement input{
+  }
+  .contact-placement input{
   margin-top:10px;
   margin-right:10px;
   width: 50%;
   height: 25px;
-}
-.contact-placement p{
+  }
+  .contact-placement p{
   font-size:12px;
   margin-top: 0px;
-}
-.contact-style-picture{
+  }
+  .contact-style-picture{
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-style-picture input{
+  }
+  .contact-style-picture input{
   margin-top:10px;
   margin-right:10px;
   width: 50%;
   height: 45px;
-}
-.contact-style-picture p{
+  }
+  .contact-style-picture p{
   font-size:12px;
   margin-top: 0px;
-}
-.contact-style-picture input::file-selector-button {
+  }
+  .contact-style-picture input::file-selector-button {
   font-weight: bold;
   color: black;
   padding: 0.5em;
@@ -130,43 +129,42 @@ font-weight: 600;
   border-radius: 3px;
   width:100px;
   height: 30px;
-  
-}
-.avaliabledate{
+  }
+  .avaliabledate{
   margin-top:10px;
   margin-right:10px;
   width: 50%;
   height: 100px;
-}
-
-.contact-size{
+  }
+  
+  .contact-size{
   font-weight: 600;
   margin-top: 25px;
-}
-
-.contact-size input{
+  }
+  
+  .contact-size input{
   margin-top:10px;
   margin-right:10px;
   width: 50%;
   height: 25px;
-}
-
-.contact-size p{
+  }
+  
+  .contact-size p{
   font-size:12px;
   margin-top: 0px;
-}
-.contact-skin-picture{
+  }
+  .contact-skin-picture{
   font-weight: 600;
   margin-top: 25px;
-}
-
-.contact-skin-picture input{
+  }
+  
+  .contact-skin-picture input{
   margin-top:10px;
   margin-right:10px;
   width: 100%;
   height: 45px;
-}
-.contact-skin-picture input::file-selector-button {
+  }
+  .contact-skin-picture input::file-selector-button {
   font-weight: bold;
   color: black;
   padding: 0.5em;
@@ -174,24 +172,21 @@ font-weight: 600;
   border-radius: 3px;
   width:100px;
   height: 30px;
+  }
   
-}
-
-.contact-availability {
+  .contact-availability {
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-availability input{
+  }
+  .contact-availability input{
   margin-top:13px;
   margin-right:10px;
- 
-  
-}
-.contact-photo-reference-1 {
+  }
+  .contact-photo-reference-1 {
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-photo-reference-1 input::file-selector-button {
+  }
+  .contact-photo-reference-1 input::file-selector-button {
   font-weight: bold;
   color: black;
   padding: 0.5em;
@@ -199,18 +194,17 @@ font-weight: 600;
   border-radius: 3px;
   width:100px;
   height: 30px;
-  
-}
-.contact-photo-reference-1 input{
+  }
+  .contact-photo-reference-1 input{
   margin-top:10px;
   margin-right:10px;
-}
-
-.contact-photo-reference-2 {
+  }
+  
+  .contact-photo-reference-2 {
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-photo-reference-2 input::file-selector-button {
+  }
+  .contact-photo-reference-2 input::file-selector-button {
   font-weight: bold;
   color: black;
   padding: 0.5em;
@@ -218,17 +212,16 @@ font-weight: 600;
   border-radius: 3px;
   width:100px;
   height: 30px;
-  
-}
-.contact-photo-reference-2 input{
+  }
+  .contact-photo-reference-2 input{
   margin-top:10px;
   margin-right:10px;
-}
-.contact-photo-reference-3 {
+  }
+  .contact-photo-reference-3 {
   font-weight: 600;
   margin-top: 25px;
-}
-.contact-photo-reference-3 input::file-selector-button {
+  }
+  .contact-photo-reference-3 input::file-selector-button {
   font-weight: bold;
   color: black;
   padding: 0.5em;
@@ -236,36 +229,42 @@ font-weight: 600;
   border-radius: 3px;
   width:100px;
   height: 30px;
-  
-}
-.contact-photo-reference-3 input{
+  }
+  .contact-photo-reference-3 input{
   margin-top:10px;
   margin-right:10px;
-}
-
-.contact-travel{
+  }
+  
+  .contact-travel{
   font-weight: 600;
   margin-top: 25px;
-}
-
-.contact-travel input{
+  }
+  
+  .contact-travel input{
   margin-top:13px;
   margin-right:10px;
- font-size:12px;
+  font-size:12px;
+  }
   
-}
-
-.contact-submit input{
-  margin-top:50px;
+  .contact-submit input{
+  margin:20px 0;
   width:100px;
   font-size:16px;
   font-weight:bold;
   height:25px;
-  margin-left:165px;
-}
-
-.contact-submit input:hover{
+  }
+  
+  .contact-submit input:hover{
   opacity:0.8;
-}
-
-
+  }
+  .error-message {
+  color: red;
+  line-height: 25px;
+  }
+  .success-message{
+  text-align: center;
+  line-height: 25px;
+  }
+  .contact-tattoo-description textarea {
+  width: 100%;
+  }
