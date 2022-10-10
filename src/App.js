@@ -377,7 +377,7 @@ function App() {
                 <br></br>
               </div>
               <div className="contact-submit">
-                <input type="submit" value={loading ? "Sending..." : "Sending"} />
+                <input type="submit" value={loading ? "Sending..." : "Submit"} />
               </div>
               {error ? <span className="error-message">There has been an error. We are sorry for the inconvince. Please try again</span> : <></>}
             </form>
