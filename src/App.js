@@ -4,9 +4,9 @@ import image from "./M93A6808.JPG";
 import Compressor from 'compressorjs';
 
 
+
 function App() {
   const [formInputs, setFormInputs] = useState({
-    senderEmail: 'ufuk.mehmetoglu@gmail.com',
     firstname: "",
     lastname: "",
     email: "",
@@ -30,9 +30,9 @@ function App() {
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+
   const handleSubmit = (e) => {
     const {
-      senderEmail,
       firstname,
       lastname,
       age,
@@ -52,8 +52,10 @@ function App() {
     } = formInputs;
     e.preventDefault();
 
+    const {REACT_APP_EMAIL, REACT_APP_URL } = process.env;
+
     setLoading(true);
-    fetch("https://oy738lt412.execute-api.us-east-1.amazonaws.com/sendEmail", {
+    fetch(`${REACT_APP_URL}`, {
       mode: "no-cors",
       method: "POST",
       headers: {
@@ -61,7 +63,7 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        senderEmail,
+        senderEmail: REACT_APP_EMAIL,
         firstname,
         lastname,
         age,
@@ -82,12 +84,10 @@ function App() {
       }),
     })
       .then((res) => {
-        console.log('res', res);
         setSuccess(true);
         setLoading(false);
       })
       .catch((err) => {
-        console.log('err', err);
         setLoading(false);
         setError(true);
       });
@@ -136,7 +136,7 @@ function App() {
     setDefaultState(!defaultState)
   }, [formInputs.location, formInputs.availability])
 
-
+  console.log(formInputs)
   return (
     <div className="contact-form">
       <div className="contact-form-top">
@@ -325,7 +325,6 @@ function App() {
                   name="availabledate"
                   style={{ display: formInputs.availability === 'Specific dates' ? "block" : "none" }}
                   placeholder="please write your available days"
-                  required
                 />
               </div>
               <div className="contact-photo-reference-1">
