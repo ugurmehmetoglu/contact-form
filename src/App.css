@@ -255,6 +255,7 @@
     background: white;
     border-radius: 4px;
     border: none;
+    color: black;
   }
   
   .contact-submit input:hover{
