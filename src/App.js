@@ -21,7 +21,7 @@ function App() {
     picture2: "",
     picture3: "",
     location: "",
-    availability: "",
+    availability: "Available",
     availabledate: "",
   });
   const [defaultState, setDefaultState] = useState(false)
@@ -52,8 +52,7 @@ function App() {
     } = formInputs;
     e.preventDefault();
 
-    const {REACT_APP_EMAIL, REACT_APP_URL } = process.env;
-
+    const { REACT_APP_EMAIL, REACT_APP_URL } = process.env;
     setLoading(true);
     fetch(`${REACT_APP_URL}`, {
       mode: "no-cors",
@@ -101,9 +100,9 @@ function App() {
     if (!image) {
       return;
     }
-    if (event.target.name === 'picture1') {
-      quality = 0.9;
-      maxWidth = 700;
+    if (event.target.name === 'picture1' || event.target.name === 'skin' || event.target.name === 'style') {
+      quality = 1;
+      maxWidth = 1000;
     }
 
     new Compressor(image, {
@@ -136,7 +135,7 @@ function App() {
     setDefaultState(!defaultState)
   }, [formInputs.location, formInputs.availability])
 
-  console.log(formInputs)
+
   return (
     <div className="contact-form">
       <div className="contact-form-top">
