@@ -93,17 +93,18 @@ function App() {
   };
 
   const handlePicture = (event) => {
-    let quality = 0.7;
-    let maxWidth = 500;
+    let quality = 0.9;
+    let maxWidth = 1500;
     let files = event.target.files;
     let image = files[0];
     if (!image) {
       return;
     }
-    if (event.target.name === 'picture1' || event.target.name === 'skin' || event.target.name === 'style') {
-      quality = 1;
-      maxWidth = 1000;
-    }
+    // if (event.target.name === 'picture1' || event.target.name === 'skin' || event.target.name === 'style') {
+    //   console.log('hello');
+    //   quality = 0.95;
+    //   // maxWidth = 1000;
+    // }
 
     new Compressor(image, {
       quality: quality, // 0.6 can also be used, but its not recommended to go below.
